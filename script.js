@@ -854,6 +854,11 @@
         }
       }
     })
-    .catch(function () {});
+    .catch(function () {
+      var container = document.querySelector(".footer-views");
+      if (container) {
+        container.style.display = "none";
+      }
+    });
 
 }());
