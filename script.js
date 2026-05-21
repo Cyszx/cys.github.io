@@ -834,7 +834,7 @@
     window.open("https://discord.gg/cys", "_blank");
   });
 
-  var COUNTER_URL = "https://api.counterapi.dev/v2/cyszxs-team-4186/cys-portfolio/up";
+  var COUNTER_URL = "https://api.counterapi.dev/v1/cyszxs/portfolio/up";
 
   fetch(COUNTER_URL)
     .then(function (r) { return r.json(); })
