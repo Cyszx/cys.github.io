@@ -24,6 +24,7 @@
   document.body.classList.add("loading");
 
   var loaderDone = false;
+  var spotifyInterval = null;
 
   function dismissLoader() {
     if (loaderDone) return;
@@ -656,6 +657,10 @@
 
     var cardActivityEl = document.getElementById("hero-card-activity");
     var spotifyVis = document.getElementById("spotify-visualizer");
+    var spotifyPlayerEl = document.getElementById("spotify-player");
+    var spotifyAlbumArt = document.getElementById("spotify-album-art");
+    var spotifySongTitle = document.getElementById("spotify-song-title");
+    var spotifySongArtist = document.getElementById("spotify-song-artist");
 
     if (cardActivityEl) {
       var titleEl = cardActivityEl.querySelector(".hero-card-activity-title");
@@ -676,6 +681,49 @@
         spotifyVis.classList.add("active");
       } else {
         spotifyVis.classList.remove("active");
+      }
+    }
+
+    if (isSpotify && data.spotify) {
+      if (spotifyPlayerEl) spotifyPlayerEl.classList.add("active");
+      if (cardActivityEl) cardActivityEl.style.display = "none";
+      if (spotifyAlbumArt && data.spotify.album_art_url) {
+        spotifyAlbumArt.src = data.spotify.album_art_url;
+      }
+      if (spotifySongTitle) {
+        spotifySongTitle.textContent = data.spotify.song;
+      }
+      if (spotifySongArtist) {
+        spotifySongArtist.textContent = data.spotify.artist;
+      }
+      if (spotifyInterval) {
+        clearInterval(spotifyInterval);
+        spotifyInterval = null;
+      }
+      if (data.spotify.timestamps) {
+        var start = data.spotify.timestamps.start;
+        var end = data.spotify.timestamps.end;
+        var duration = end - start;
+        if (start && end && duration > 0) {
+          var updateProgress = function () {
+            var current = Date.now();
+            var progress = ((current - start) / duration) * 100;
+            progress = Math.max(0, Math.min(100, progress));
+            var progressBar = document.getElementById("spotify-progress-bar");
+            if (progressBar) {
+              progressBar.style.width = progress + "%";
+            }
+          };
+          updateProgress();
+          spotifyInterval = setInterval(updateProgress, 500);
+        }
+      }
+    } else {
+      if (spotifyPlayerEl) spotifyPlayerEl.classList.remove("active");
+      if (cardActivityEl) cardActivityEl.style.display = "block";
+      if (spotifyInterval) {
+        clearInterval(spotifyInterval);
+        spotifyInterval = null;
       }
     }
   }

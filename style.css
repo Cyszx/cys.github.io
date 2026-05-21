@@ -92,6 +92,10 @@ body.loading { overflow: hidden; }
   box-shadow: 0 0 8px var(--accent-glow-strong);
 }
 
+.hero-card-avatar-placeholder.hidden {
+  display: none !important;
+}
+
 #loader {
   position: fixed;
   inset: 0;
@@ -1647,23 +1651,78 @@ footer {
   word-break: break-word;
 }
 
-.spotify-visualizer {
+.spotify-player {
   display: none;
-  align-items: flex-end;
-  gap: 3px;
-  height: 18px;
-  margin-top: 4px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(24, 24, 31, 0.6);
+  border: 1px solid rgba(29, 185, 84, 0.2);
+  text-align: left;
+  gap: 12px;
+  align-items: center;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 8px;
 }
 
-.spotify-visualizer.active {
+.spotify-player.active {
   display: flex;
+}
+
+.hero-profile-card:hover .spotify-player {
+  background: rgba(24, 24, 31, 0.85);
+  border-color: rgba(29, 185, 84, 0.4);
+  box-shadow: 0 0 12px rgba(29, 185, 84, 0.1);
+}
+
+.spotify-album-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.spotify-album-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.spotify-album-wrap:hover .spotify-album-img {
+  transform: scale(1.08);
+}
+
+.spotify-visualizer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, background 0.2s ease;
+  pointer-events: none;
+}
+
+.spotify-player:hover .spotify-visualizer {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .spotify-bar {
   width: 3px;
-  height: 100%;
+  height: 60%;
   background-color: #1db954;
-  border-radius: 2px;
+  border-radius: 1px;
   transform-origin: bottom;
   animation: spotifyBounce 1.2s ease-in-out infinite;
 }
@@ -1676,5 +1735,47 @@ footer {
 @keyframes spotifyBounce {
   0%, 100% { transform: scaleY(0.25); }
   50% { transform: scaleY(1); }
+}
+
+.spotify-song-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.spotify-song-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.spotify-song-artist {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 8px;
+}
+
+.spotify-progress-wrap {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.spotify-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #1db954;
+  border-radius: 2px;
+  transition: width 0.3s linear;
 }
 
