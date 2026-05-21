@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Developer focused on automation, desktop software, and tooling systems. Open for commissions." />
+  <meta name="keywords" content="developer, automation, AutoHotkey, Python, desktop software, macros" />
+  <meta property="og:title" content="Cys - Developer" />
+  <meta property="og:description" content="Developer focused on automation, desktop software, and tooling systems." />
+  <meta property="og:type" content="website" />
+  <title>Cys - Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+
+  <div id="noise-overlay"></div>
+
+  <div id="scroll-progress"></div>
+
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-name">
+        <span>Cys</span>
+        <div class="loader-line"></div>
+      </div>
+      <div class="loader-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ctx-menu">
+    <button class="ctx-item" id="ctx-projects">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      View Projects
+    </button>
+    <button class="ctx-item" id="ctx-copy">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copy Discord
+    </button>
+    <div class="ctx-divider"></div>
+    <button class="ctx-item" id="ctx-community">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.101 18.08.114 18.1.134 18.114a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      Open Community
+    </button>
+  </div>
+
+  <div id="cmd-overlay" class="cmd-hidden">
+    <div id="cmd-backdrop"></div>
+    <div id="cmd-box">
+      <div id="cmd-input-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="cmd-input" type="text" placeholder="Type a command..." autocomplete="off" spellcheck="false" />
+        <span id="cmd-close-hint">esc</span>
+      </div>
+      <div id="cmd-list"></div>
+    </div>
+  </div>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">Cys<span class="accent-dot">.</span></a>
+    <div class="nav-links">
+      <a href="#about" data-nav="about">About</a>
+      <a href="#setup" data-nav="setup">Setup</a>
+      <a href="#skills" data-nav="skills">Skills</a>
+      <a href="#projects" data-nav="projects">Projects</a>
+      <a href="#commissions" data-nav="commissions">Commissions</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button id="cmd-trigger" class="cmd-trigger-btn" aria-label="Open command palette">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Search</span>
+        <kbd>K</kbd>
+      </button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#setup" class="mobile-link">Setup</a>
+    <a href="#skills" class="mobile-link">Skills</a>
+    <a href="#projects" class="mobile-link">Projects</a>
+    <a href="#commissions" class="mobile-link">Commissions</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </div>
+
+  <main>
+
+    <section id="hero">
+      <div class="hero-wrap">
+        <div class="hero-content">
+          <div class="hero-top-row reveal-hero">
+            <p class="section-tag">developer</p>
+            <div id="hero-discord-badge" class="hero-discord-badge">
+              <div class="hero-discord-avatar-wrap">
+                <img id="hero-discord-avatar" src="" alt="Cys" class="hero-discord-avatar-img" />
+                <div id="hero-discord-avatar-placeholder" class="hero-discord-avatar-placeholder">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.101 18.08.114 18.1.134 18.114a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+                </div>
+                <div id="hero-discord-status-dot" class="hero-status-dot status-offline"></div>
+              </div>
+              <span id="hero-discord-text" class="hero-discord-text">offline</span>
+            </div>
+            <span class="availability-badge">
+              <span class="avail-dot"></span>
+              Open for commissions
+            </span>
+          </div>
+          <h1 class="hero-name reveal-hero">Cys</h1>
+          <p class="hero-sub reveal-hero">
+            I build automation tools, desktop software, and macro systems.
+            Focused on workflow efficiency and tools that actually get used.
+          </p>
+          <div id="hero-activity" class="hero-activity reveal-hero" style="display:none;"></div>
+          <div class="hero-buttons reveal-hero">
+            <a href="#projects" class="btn-primary">View Projects</a>
+            <a href="#contact" class="btn-secondary">Contact</a>
+          </div>
+        </div>
+        <div class="hero-profile-side reveal-hero">
+          <div class="hero-profile-card">
+            <div class="hero-card-status-dot" id="hero-card-status-dot"></div>
+            <div class="hero-card-avatar-wrap">
+              <img id="hero-card-avatar" src="" alt="Cys" class="hero-card-avatar-img" />
+              <div id="hero-card-avatar-placeholder" class="hero-card-avatar-placeholder">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.101 18.08.114 18.1.134 18.114a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+              </div>
+            </div>
+            <div class="hero-card-info">
+              <div class="hero-card-name">Cys</div>
+              <div class="hero-card-username">@cyszxz</div>
+              <div class="hero-card-status-text" id="hero-card-status-text">offline</div>
+            </div>
+            <div class="hero-card-activity" id="hero-card-activity">
+              <div class="hero-card-activity-title">No Active Activity</div>
+              <div class="hero-card-activity-details">Status is currently quiet</div>
+            </div>
+            <div class="spotify-visualizer" id="spotify-visualizer">
+              <div class="spotify-bar"></div>
+              <div class="spotify-bar"></div>
+              <div class="spotify-bar"></div>
+              <div class="spotify-bar"></div>
+              <div class="spotify-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="about">
+      <div class="container">
+        <p class="section-tag reveal">About</p>
+        <h2 class="section-title reveal">A bit about me</h2>
+        <div class="about-grid">
+          <div class="about-col">
+            <p class="about-text reveal">
+              I mainly work with Python and AutoHotkey v2. Most of what I build
+              is around automation: tools that handle repetitive tasks, custom
+              macro systems, and desktop applications with clean interfaces.
+            </p>
+            <p class="about-text reveal">
+              On the Python side I use Tkinter and CustomTkinter for building
+              desktop GUIs. I also work with mouse and keyboard automation,
+              Discord bots, and APIs. Still going deeper on backend and API
+              work, but I have working experience with it.
+            </p>
+          </div>
+          <div class="about-col">
+            <p class="about-text reveal">
+              I like building utility-focused stuff. Tools that slot into a
+              workflow and make something faster or easier to manage. If a
+              process is manual and repetitive, there is usually a better way.
+            </p>
+            <p class="about-text reveal">
+              I take commissions for custom projects. If you need an automation
+              tool, desktop app, macro system, or Discord bot built to your
+              specs, feel free to reach out.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="setup">
+      <div class="container">
+        <p class="section-tag reveal">Setup</p>
+        <h2 class="section-title reveal">What I use</h2>
+        <div class="setup-grid">
+          <div class="setup-card reveal">
+            <div class="setup-icon">
+              <svg width="22" height="22" viewBox="0 0 100 100" fill="none">
+                <rect width="100" height="100" rx="18" fill="#23a9f2"/>
+                <path d="M13 73.5L37.5 25l12 22L62 33l25 40.5z" fill="white" opacity="0.9"/>
+              </svg>
+            </div>
+            <div class="setup-info">
+              <p class="setup-name">Visual Studio Code</p>
+              <p class="setup-sub">Primary editor</p>
+            </div>
+          </div>
+          <div class="setup-card reveal">
+            <div class="setup-icon">
+              <svg width="22" height="22" viewBox="0 0 100 100">
+                <rect width="100" height="100" rx="18" fill="#0078d4"/>
+                <text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Segoe UI,sans-serif" font-weight="600">W</text>
+              </svg>
+            </div>
+            <div class="setup-info">
+              <p class="setup-name">Windows 11</p>
+              <p class="setup-sub">Operating system</p>
+            </div>
+          </div>
+          <div class="setup-card reveal">
+            <div class="setup-icon">
+              <svg width="22" height="22" viewBox="0 0 100 100">
+                <rect width="100" height="100" rx="18" fill="#1a1a2e"/>
+                <text x="50" y="62" font-size="34" text-anchor="middle" fill="#7c6aff" font-family="Courier New,monospace" font-weight="700">AHK</text>
+              </svg>
+            </div>
+            <div class="setup-info">
+              <p class="setup-name">AutoHotkey v2</p>
+              <p class="setup-sub">Scripting language</p>
+            </div>
+          </div>
+          <div class="setup-card reveal">
+            <div class="setup-icon">
+              <svg width="22" height="22" viewBox="0 0 100 100">
+                <rect width="100" height="100" rx="18" fill="#3776ab"/>
+                <text x="50" y="66" font-size="44" text-anchor="middle" fill="white" font-family="Courier New,monospace" font-weight="700">Py</text>
+              </svg>
+            </div>
+            <div class="setup-info">
+              <p class="setup-name">Python</p>
+              <p class="setup-sub">Primary language</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="skills">
+      <div class="container">
+        <p class="section-tag reveal">Skills</p>
+        <h2 class="section-title reveal">What I work with</h2>
+        <div class="skills-grid">
+          <div class="skill-card reveal" data-cat="language">
+            <p class="skill-name">Python</p>
+            <p class="skill-cat">language</p>
+          </div>
+          <div class="skill-card reveal" data-cat="language">
+            <p class="skill-name">AutoHotkey v2</p>
+            <p class="skill-cat">language</p>
+          </div>
+          <div class="skill-card reveal" data-cat="library">
+            <p class="skill-name">Tkinter</p>
+            <p class="skill-cat">library</p>
+          </div>
+          <div class="skill-card reveal" data-cat="library">
+            <p class="skill-name">CustomTkinter</p>
+            <p class="skill-cat">library</p>
+          </div>
+          <div class="skill-card reveal" data-cat="platform">
+            <p class="skill-name">Discord Bots</p>
+            <p class="skill-cat">platform</p>
+          </div>
+          <div class="skill-card reveal" data-cat="platform">
+            <p class="skill-name">APIs</p>
+            <p class="skill-cat">platform</p>
+          </div>
+          <div class="skill-card reveal" data-cat="specialty">
+            <p class="skill-name">Automation</p>
+            <p class="skill-cat">specialty</p>
+          </div>
+          <div class="skill-card reveal" data-cat="specialty">
+            <p class="skill-name">Mouse &amp; Keyboard</p>
+            <p class="skill-cat">specialty</p>
+          </div>
+          <div class="skill-card reveal" data-cat="specialty">
+            <p class="skill-name">Desktop Apps</p>
+            <p class="skill-cat">specialty</p>
+          </div>
+          <div class="skill-card reveal" data-cat="specialty">
+            <p class="skill-name">Tooling Systems</p>
+            <p class="skill-cat">specialty</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="projects">
+      <div class="container">
+        <p class="section-tag reveal">Projects</p>
+        <h2 class="section-title reveal">Things I have built</h2>
+        <div class="projects-grid">
+
+          <div class="project-card tilt-card reveal">
+            <div class="tilt-inner">
+              <div class="project-top">
+                <h3 class="project-title">Macro Suite</h3>
+                <span class="project-num">01</span>
+              </div>
+              <div class="project-tags">
+                <span class="tag">AutoHotkey v2</span>
+                <span class="tag">Automation</span>
+                <span class="tag">Tooling</span>
+              </div>
+              <ul class="project-desc">
+                <li>Roblox macro platform supporting 7+ games.</li>
+                <li>Includes automation systems and custom tooling built around efficiency and repeatable workflows.</li>
+                <li>Connected to an active Discord community.</li>
+              </ul>
+              <a href="https://discord.gg/cys" target="_blank" rel="noopener noreferrer" class="project-link">
+                discord.gg/cys
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+              <div class="card-glow-line"></div>
+            </div>
+          </div>
+
+          <div class="project-card tilt-card reveal">
+            <div class="tilt-inner">
+              <div class="project-top">
+                <h3 class="project-title">Key System</h3>
+                <span class="project-num">02</span>
+              </div>
+              <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">AutoHotkey</span>
+                <span class="tag">Security</span>
+              </div>
+              <ul class="project-desc">
+                <li>Authentication and licensing platform for macros.</li>
+                <li>Generates secure keys, locks them to HWID, and prevents unauthorized sharing.</li>
+                <li>Designed for AutoHotkey-based tools.</li>
+              </ul>
+              <div class="card-glow-line"></div>
+            </div>
+          </div>
+
+          <div class="project-card tilt-card reveal">
+            <div class="tilt-inner">
+              <div class="project-top">
+                <h3 class="project-title">Desktop Utilities</h3>
+                <span class="project-num">03</span>
+              </div>
+              <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Tkinter</span>
+                <span class="tag">CustomTkinter</span>
+              </div>
+              <ul class="project-desc">
+                <li>Collection of Python and AutoHotkey applications.</li>
+                <li>Workflow tools, automation utilities, mouse and keyboard systems, and custom desktop software.</li>
+              </ul>
+              <div class="card-glow-line"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="commissions">
+      <div class="container">
+        <p class="section-tag reveal">Commissions</p>
+        <h2 class="section-title reveal">Open for work</h2>
+        <p class="commissions-sub reveal">
+          Taking commissions for custom tools and projects. Reach out on Discord
+          with what you need and we can go from there.
+        </p>
+        <div class="services-grid">
+          <div class="service-card reveal">
+            <div class="service-dot"></div>
+            <p class="service-name">Automation tools</p>
+            <p class="service-desc">Script-based or app-based automation for repetitive tasks.</p>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-dot"></div>
+            <p class="service-name">Desktop applications</p>
+            <p class="service-desc">Python GUI apps using Tkinter or CustomTkinter.</p>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-dot"></div>
+            <p class="service-name">Macro systems</p>
+            <p class="service-desc">AutoHotkey v2 macros, suites, and supporting tooling.</p>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-dot"></div>
+            <p class="service-name">Discord bots</p>
+            <p class="service-desc">Bots built to your spec, from simple commands to full systems.</p>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-dot"></div>
+            <p class="service-name">Custom utilities</p>
+            <p class="service-desc">Private tools built for specific workflows or setups.</p>
+          </div>
+        </div>
+        <a href="#contact" class="btn-ghost reveal">Get in touch</a>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="contact">
+      <div class="container">
+        <p class="section-tag reveal">Contact</p>
+        <h2 class="section-title reveal">Find me on Discord</h2>
+        <div class="contact-card reveal">
+          <div class="contact-avatar-wrap">
+            <img id="discord-avatar" src="" alt="Cys" class="contact-avatar-img" />
+            <div id="discord-avatar-placeholder" class="contact-avatar-placeholder">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.101 18.08.114 18.1.134 18.114a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            </div>
+            <div id="discord-status-dot" class="status-dot status-offline"></div>
+          </div>
+          <div class="contact-info">
+            <div class="contact-name-row">
+              <p class="contact-display">Cys</p>
+              <span id="discord-status-label" class="status-label">offline</span>
+            </div>
+            <p class="contact-username">@Cyszxz</p>
+            <p id="discord-activity" class="contact-activity" style="display:none;"></p>
+          </div>
+          <div class="contact-actions">
+            <button class="copy-btn" id="copy-btn" data-username="Cyszxz">
+              <svg class="icon-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="copy-text">Copy username</span>
+            </button>
+            <a href="https://discord.com/users/1141849395902554202" target="_blank" rel="noopener noreferrer" class="discord-btn">
+              Open profile
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <p class="footer-text">Cys. Built to ship.</p>
+        <div class="footer-right">
+          <span class="footer-views">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="view-count">...</span> views
+          </span>
+          <p class="footer-hint">Press <kbd>K</kbd> to search</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-updated">Last updated <time datetime="2026-05-21">May 2026</time></p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-top" aria-label="Back to top">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
