@@ -839,7 +839,7 @@
   fetch(COUNTER_URL)
     .then(function (r) { return r.json(); })
     .then(function (data) {
-      var el = document.getElementById("view-count");
+      var el = document.getElementById("up_count");
       if (el && data) {
         var val = null;
         if (data.data && typeof data.data.up_count === "number") {
