@@ -9,8 +9,6 @@
   var nav = document.getElementById("nav");
   var navToggle = document.getElementById("nav-toggle");
   var mobileMenu = document.getElementById("mobile-menu");
-  var canvas = document.getElementById("bg-canvas");
-  var ctx = canvas.getContext("2d");
   var cursorDot = document.getElementById("cursor-dot");
   var scrollProgress = document.getElementById("scroll-progress");
   var cmdOverlay = document.getElementById("cmd-overlay");
@@ -50,15 +48,44 @@
   var mouseY = -100;
   var dotX = -100;
   var dotY = -100;
+  var cursorFrameActive = false;
+
+  function animateCursor() {
+    var dx = mouseX - dotX;
+    var dy = mouseY - dotY;
+
+    if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+      dotX = mouseX;
+      dotY = mouseY;
+      cursorDot.style.left = dotX + "px";
+      cursorDot.style.top = dotY + "px";
+      cursorFrameActive = false;
+      return;
+    }
+
+    dotX += dx * 0.18;
+    dotY += dy * 0.18;
+    cursorDot.style.left = dotX + "px";
+    cursorDot.style.top = dotY + "px";
+    requestAnimationFrame(animateCursor);
+  }
 
   document.addEventListener("mousemove", function (e) {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    if (!cursorFrameActive) {
+      cursorFrameActive = true;
+      requestAnimationFrame(animateCursor);
+    }
   });
 
   document.addEventListener("mouseleave", function () {
     mouseX = -100;
     mouseY = -100;
+    if (!cursorFrameActive) {
+      cursorFrameActive = true;
+      requestAnimationFrame(animateCursor);
+    }
   });
 
   var hoverTargets = "a, button, .skill-card, .project-card, .service-card, .setup-card, .cmd-item";
@@ -75,16 +102,6 @@
     }
   });
 
-  function animateCursor() {
-    dotX += (mouseX - dotX) * 0.18;
-    dotY += (mouseY - dotY) * 0.18;
-    cursorDot.style.left = dotX + "px";
-    cursorDot.style.top = dotY + "px";
-    requestAnimationFrame(animateCursor);
-  }
-
-  animateCursor();
-
   function updateScrollProgress() {
     var scrollTop = window.scrollY;
     var docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -92,72 +109,7 @@
     scrollProgress.style.width = pct + "%";
   }
 
-  var frame = 0;
 
-  function resizeCanvas() {
-    var dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    ctx.scale(dpr, dpr);
-  }
-
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas, { passive: true });
-
-  var orbs = [
-    { xRatio: 0.18, yRatio: 0.28, phase: 0 },
-    { xRatio: 0.82, yRatio: 0.62, phase: 2.1 },
-    { xRatio: 0.5, yRatio: 0.85, phase: 4.3 },
-  ];
-
-  function drawBg() {
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    ctx.clearRect(0, 0, w, h);
-
-    var cellSize = 64;
-    var cols = Math.ceil(w / cellSize) + 1;
-    var rows = Math.ceil(h / cellSize) + 1;
-
-    ctx.strokeStyle = "rgba(124, 106, 255, 0.032)";
-    ctx.lineWidth = 1;
-
-    for (var i = 0; i < cols; i++) {
-      ctx.beginPath();
-      ctx.moveTo(i * cellSize, 0);
-      ctx.lineTo(i * cellSize, h);
-      ctx.stroke();
-    }
-
-    for (var j = 0; j < rows; j++) {
-      ctx.beginPath();
-      ctx.moveTo(0, j * cellSize);
-      ctx.lineTo(w, j * cellSize);
-      ctx.stroke();
-    }
-
-    orbs.forEach(function (orb) {
-      var pulse = Math.sin(frame * 0.007 + orb.phase) * 0.5 + 0.5;
-      var px = orb.xRatio * w;
-      var py = orb.yRatio * h;
-      var radius = 140 + pulse * 80;
-      var alpha = 0.022 + pulse * 0.022;
-
-      var grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
-      grad.addColorStop(0, "rgba(124, 106, 255, " + alpha + ")");
-      grad.addColorStop(1, "rgba(124, 106, 255, 0)");
-
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(px, py, radius, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    frame++;
-    requestAnimationFrame(drawBg);
-  }
-
-  drawBg();
 
   var backTop = document.getElementById("back-top");
   var heroSection = document.getElementById("hero");
