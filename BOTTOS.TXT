@@ -48,3 +48,62 @@ We reserve the right to update or modify these Terms at any time. Continued use 
 
 ### 7. Contact
 If you have any questions, concerns, or support inquiries regarding these Terms or the Bot, please reach out via our official Discord support server or direct message the server administration.
+
+
+Application Details
+What does your application do? Please be as detailed as possible, and feel free to include links to image or video examples.
+Our bot is a multipurpose community utility and management bot designed to enhance server engagement and administration. Its primary features include:
+
+Server Moderation & Administration: Automated role management, logging member events (joins/leaves), and standard moderation tools.
+Utility & Information Commands: Providing server statistics, member lookup, and customizable prefix-based utility commands.
+Community Engagement: Interactive commands, notifications, and helper features to streamline server communication.
+Do you have a public Privacy Policy telling your users about their data usage?
+Yes
+Where is your Privacy Policy available?
+In my website
+Please share a link to your Privacy Policy.
+https://github.com/Cyszx/cys.github.io/blob/main/BOTTOS.TXT
+Privileged Gateway Intents
+Which intents are you applying for, if any? (Leave blank if you do not need any of these)
+
+Server Members Intent
+
+Message Content Intent
+You have the following limited intents and may apply for their full intents: Server Members Intent, Message Content Intent, Presence Intent.
+
+Server Members Intent
+Why do you need the Guild Members intent?
+We require the Server Members Intent for the following core functionalities:
+
+Join/Leave Logging & Welcoming: Detecting when new members join or leave the server in order to assign default join roles and send welcome messages.
+Member Verification & Role Management: Fetching guild member lists to manage custom server roles and verify member permissions for administrative commands.
+Server Stats & Member Count: Displaying accurate, up-to-date member counts across various server utility channels.
+Please provide links to screenshots and/or videos that demonstrate your use case
+https://imgur.com/a/gcpFyT3
+Are you storing any API Data off-platform (outside of Discord)?
+Yes
+Are you storing API Data for 30 days or less?
+No
+How do users contact you to request deletion of their activity data?
+They can create a ticket inside of my server
+Are you encrypting the data that you store at rest, as is required by our developer policy?
+Yes
+Message Content Intent
+Can users opt-out of having their message content data tracked?
+Yes
+Are you storing message content data off-platform (outside of Discord)?
+No
+Will the message content data be used to train machine learning or AI Models?
+If yes, please explain how in the text box below, including how such models would be used.
+No
+Why do you need the Message Content intent?
+We require the Message Content Intent for:
+
+Prefix Command Processing: Parsing user messages for custom command triggers (e.g., !help, !config, custom server utility prefixes) and command arguments.
+Automated Content Moderation: Scanning sent messages in real-time for blacklisted words, spam patterns, invite link filtering, and malicious links to protect the server.
+Message Context Actions: Reading message content to execute user-requested utility actions (such as quote formatting, message reminders, and clean-up utilities).
+Note: Message content is processed in-memory in real time to execute commands/moderation and is never permanently logged or stored off-platform.
+Please provide links to screenshots and/or videos that demonstrate your use case
+https://imgur.com/a/c8AWCac
+Acknowledgement
+
